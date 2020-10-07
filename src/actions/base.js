@@ -145,6 +145,11 @@ export const setShouldStoreSettingsInSyncBackend = (newShouldStoreSettingsInSync
   };
 };
 
+export const setUseStaticHeaderActionDrawer = (useStaticHeaderActionDrawer) => ({
+  type: 'SET_USE_STATIC_HEADERACTIONDRAWER',
+  useStaticHeaderActionDrawer,
+});
+
 export const setHasUnseenChangelog = (newHasUnseenChangelog) => ({
   type: 'SET_HAS_UNSEEN_CHANGELOG',
   newHasUnseenChangelog,

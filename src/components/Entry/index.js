@@ -25,6 +25,7 @@ import SyncServiceSignIn from '../SyncServiceSignIn';
 import * as syncBackendActions from '../../actions/sync_backend';
 import * as orgActions from '../../actions/org';
 import * as baseActions from '../../actions/base';
+import StandardHeaderActionDrawer from '../OrgFile/components/Header/components/HeaderActionDrawer/StandardHeaderActionDrawer.js';
 
 class Entry extends PureComponent {
   constructor(props) {
@@ -116,12 +117,19 @@ class Entry extends PureComponent {
     }
 
     return (
+      <>
+      {this.props.useStaticHeaderActionDrawer ?
+        <div style={{marginLeft: '20px'}}>
+          <StandardHeaderActionDrawer/>
+        </div>
+      : null}
       <OrgFile
         path={path}
         shouldDisableDirtyIndicator={false}
         shouldDisableActionDrawer={false}
         shouldDisableSyncButtons={false}
       />
+      </>
     );
   }
 
@@ -137,6 +145,7 @@ class Entry extends PureComponent {
       activeModalPage,
       pendingCapture,
       location: { pathname },
+      useStaticHeaderActionDrawer,
     } = this.props;
 
     const pendingCapturePath = !!pendingCapture && `/file${pendingCapture.get('capturePath')}`;
@@ -202,6 +211,7 @@ const mapStateToProps = (state) => {
     fontSize: state.base.get('fontSize'),
     lastSeenChangelogHash: state.base.get('lastSeenChangelogHash'),
     activeModalPage: state.base.get('modalPageStack', List()).last(),
+    useStaticHeaderActionDrawer: state.base.get('useStaticHeaderActionDrawer'),
     pendingCapture: state.org.present.get('pendingCapture'),
     isDirty: state.org.present.get('isDirty'),
   };

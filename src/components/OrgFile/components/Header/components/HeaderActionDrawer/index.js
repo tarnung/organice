@@ -35,10 +35,13 @@ export default class HeaderActionDrawer extends PureComponent {
       onShareHeader,
       onRefileHeader,
       onAddNote,
+      disabled,
     } = this.props;
 
     return (
-      <div className="header-action-drawer-container">
+      <div className={disabled ? 
+        "header-action-drawer-container header-bar__actions__item--disabled" : 
+        "header-action-drawer-container"}>
         <div className="header-action-drawer__row">
           {this.iconWithFFClickCatcher({
             className: 'fas fa-pencil-alt fa-lg',

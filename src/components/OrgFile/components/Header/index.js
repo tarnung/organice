@@ -332,6 +332,7 @@ ${header.get('rawDescription')}`;
       focusedHeader,
       isFocused,
       shouldDisableActions,
+      useStaticHeaderActionDrawer,
     } = this.props;
 
     const indentLevel = !!focusedHeader
@@ -493,31 +494,34 @@ ${header.get('rawDescription')}`;
                 isSelected={isSelected}
                 shouldDisableActions={shouldDisableActions}
               />
-
-              <Collapse
-                isOpened={isSelected && !shouldDisableActions}
-                springConfig={{ stiffness: 300 }}
-                style={{ marginRight: rightSwipeActionContainerStyle.width }}
-              >
-                <HeaderActionDrawer
-                  onEnterTitleEditMode={this.handleEnterTitleEditMode}
-                  onEnterDescriptionEditMode={this.handleEnterDescriptionEditMode}
-                  isFocused={isFocused}
-                  onTagsClick={this.handleShowTagsModal}
-                  onPropertiesClick={this.handleShowPropertyListEditorModal}
-                  onFocus={this.handleFocus}
-                  onUnfocus={this.handleUnfocus}
-                  onAddNewHeader={this.handleAddNewHeader}
-                  onDeadlineClick={this.handleDeadlineClick}
-                  onClockInOutClick={this.handleClockInOutClick}
-                  onScheduledClick={this.handleScheduledClick}
-                  hasActiveClock={hasActiveClock}
-                  onShareHeader={this.handleShareHeaderClick}
-                  onRefileHeader={this.handleRefileHeaderRequest}
-                  onAddNote={this.handleAddNoteClick}
-                />
-              </Collapse>
-
+              {!useStaticHeaderActionDrawer ?
+                <Collapse
+                  isOpened={isSelected && !shouldDisableActions}
+                  springConfig={{ stiffness: 300 }}
+                  style={{ marginRight: rightSwipeActionContainerStyle.width }}
+                >
+              
+                  <HeaderActionDrawer
+                    onEnterTitleEditMode={this.handleEnterTitleEditMode}
+                    onEnterDescriptionEditMode={this.handleEnterDescriptionEditMode}
+                    isFocused={isFocused}
+                    onTagsClick={this.handleShowTagsModal}
+                    onPropertiesClick={this.handleShowPropertyListEditorModal}
+                    onFocus={this.handleFocus}
+                    onUnfocus={this.handleUnfocus}
+                    onAddNewHeader={this.handleAddNewHeader}
+                    onDeadlineClick={this.handleDeadlineClick}
+                    onClockInOutClick={this.handleClockInOutClick}
+                    onScheduledClick={this.handleScheduledClick}
+                    hasActiveClock={hasActiveClock}
+                    onShareHeader={this.handleShareHeaderClick}
+                    onRefileHeader={this.handleRefileHeaderRequest}
+                    onAddNote={this.handleAddNoteClick}
+                  />
+                
+                </Collapse>
+              : null
+              }
               <HeaderContent header={header} shouldDisableActions={shouldDisableActions} />
             </div>
           );
@@ -536,6 +540,7 @@ const mapStateToProps = (state, ownProps) => {
     bulletStyle: state.base.get('bulletStyle'),
     shouldLogIntoDrawer: state.base.get('shouldLogIntoDrawer'),
     closeSubheadersRecursively: state.base.get('closeSubheadersRecursively'),
+    useStaticHeaderActionDrawer : state.base.get('useStaticHeaderActionDrawer'),
     focusedHeader,
     isFocused: !!focusedHeader && focusedHeader.get('id') === ownProps.header.get('id'),
     inEditMode: !!state.org.present.get('editMode'),

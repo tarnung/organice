@@ -28,6 +28,7 @@ const Settings = ({
   agendaDefaultDeadlineDelayUnit,
   hasUnseenChangelog,
   syncBackend,
+  useStaticHeaderActionDrawer,
   base,
 }) => {
   const handleSignOutClick = () =>
@@ -68,6 +69,9 @@ const Settings = ({
 
   const handleShouldStoreSettingsInSyncBackendChange = () =>
     base.setShouldStoreSettingsInSyncBackend(!shouldStoreSettingsInSyncBackend);
+
+  const handleUseStaticHeaderActionDrawer = () =>
+    base.setUseStaticHeaderActionDrawer(!useStaticHeaderActionDrawer)
 
   const handleChangelogClick = () => base.pushModalPage('changelog');
 
@@ -212,6 +216,20 @@ const Settings = ({
         </div>
       </div>
 
+      <div className="setting-container">
+        <div className="setting-label">
+          Static action bar
+          <div className="setting-label__description">
+          By default the action bar is displayed inside the currently selected header.
+          Use an always visible unmoving action bar at the top of the screen instead.
+          </div>
+        </div>
+        <Switch
+          isEnabled={useStaticHeaderActionDrawer}
+          onToggle={handleUseStaticHeaderActionDrawer}
+        />
+      </div>
+
       <div className="settings-buttons-container">
         <button className="btn settings-btn" onClick={handleCaptureTemplatesClick}>
           Capture templates
@@ -275,6 +293,7 @@ const mapStateToProps = (state) => {
     closeSubheadersRecursively: state.base.get('closeSubheadersRecursively'),
     shouldNotIndentOnExport: state.base.get('shouldNotIndentOnExport'),
     hasUnseenChangelog: state.base.get('hasUnseenChangelog'),
+    useStaticHeaderActionDrawer: state.base.get('useStaticHeaderActionDrawer'),
   };
 };
 

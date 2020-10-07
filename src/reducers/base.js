@@ -44,6 +44,9 @@ const setCloseSubheadersRecursively = (state, action) =>
 const setShouldNotIndentOnExport = (state, action) =>
   state.set('shouldNotIndentOnExport', action.shouldNotIndentOnExport);
 
+const setUseStaticHeaderActionDrawer = (state, action) => 
+  state.set('useStaticHeaderActionDrawer', action.useStaticHeaderActionDrawer);
+
 const setHasUnseenChangelog = (state, action) =>
   state.set('hasUnseenChangelog', action.newHasUnseenChangelog);
 
@@ -144,6 +147,8 @@ export default (state = Map(), action) => {
       return setCloseSubheadersRecursively(state, action);
     case 'SET_SHOULD_NOT_INDENT_ON_EXPORT':
       return setShouldNotIndentOnExport(state, action);
+    case 'SET_USE_STATIC_HEADERACTIONDRAWER':
+      return setUseStaticHeaderActionDrawer(state, action);
     case 'SET_HAS_UNSEEN_CHANGELOG':
       return setHasUnseenChangelog(state, action);
     case 'SET_LAST_SEEN_CHANGELOG_HEADER':
