@@ -25,7 +25,7 @@ import SyncServiceSignIn from '../SyncServiceSignIn';
 import * as syncBackendActions from '../../actions/sync_backend';
 import * as orgActions from '../../actions/org';
 import * as baseActions from '../../actions/base';
-import StandardHeaderActionDrawer from '../OrgFile/components/Header/components/HeaderActionDrawer/StandardHeaderActionDrawer.js';
+import StaticHeaderActionDrawer from '../OrgFile/components/Header/components/StaticHeaderActionDrawer/StaticHeaderActionDrawer.js';
 
 class Entry extends PureComponent {
   constructor(props) {
@@ -117,19 +117,12 @@ class Entry extends PureComponent {
     }
 
     return (
-      <>
-      {this.props.useStaticHeaderActionDrawer ?
-        <div style={{marginLeft: '20px'}}>
-          <StandardHeaderActionDrawer/>
-        </div>
-      : null}
       <OrgFile
         path={path}
         shouldDisableDirtyIndicator={false}
         shouldDisableActionDrawer={false}
         shouldDisableSyncButtons={false}
       />
-      </>
     );
   }
 
@@ -157,7 +150,20 @@ class Entry extends PureComponent {
 
     return (
       <div className={className}>
-        <HeaderBar />
+        {this.props.useStaticHeaderActionDrawer ?
+          <Switch>
+            <Route path="/file/:path+">
+              <div className='header-bar-and-static-action-bar'>
+                <HeaderBar/>
+                <div className='static-action-bar-divider'/>
+                <StaticHeaderActionDrawer/>
+              </div>
+            </Route>
+            <Route>
+              <HeaderBar/>
+            </Route>
+          </Switch>
+        : <HeaderBar/>}
 
         <LoadingIndicator message={loadingMessage} />
 

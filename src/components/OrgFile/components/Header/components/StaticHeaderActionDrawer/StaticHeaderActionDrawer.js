@@ -9,12 +9,12 @@ import './stylesheet.css';
 
 import _ from 'lodash';
 
-import HeaderActionDrawer from './';
+import HeaderActionDrawer from '../HeaderActionDrawer';
 
 import { indexOfHeaderWithId } from '../../../../../../lib/org_utils';
 import { getCurrentTimestamp } from '../../../../../../lib/timestamps';
 
-class StandardHeaderActionDrawer extends PureComponent {
+class StaticHeaderActionDrawer extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -162,7 +162,8 @@ ${header.get('rawDescription')}`;
 
     if(!header){
       return (
-        <HeaderActionDrawer
+        <div className='static-action-bar'>
+          <HeaderActionDrawer
                 disabled={true}
                 onEnterTitleEditMode={this.noop}
                 onEnterDescriptionEditMode={this.noop}
@@ -179,7 +180,9 @@ ${header.get('rawDescription')}`;
                 onShareHeader={this.noop}
                 onRefileHeader={this.noop}
                 onAddNote={this.noop}
-              />);
+              />
+        </div>
+        );
     }
     this.props.org.selectHeader(header.get('id'))
 
@@ -196,7 +199,8 @@ ${header.get('rawDescription')}`;
       
 
     return (
-    <HeaderActionDrawer
+      <div className='static-action-bar'>
+        <HeaderActionDrawer
             onEnterTitleEditMode={this.handleEnterTitleEditMode}
             onEnterDescriptionEditMode={this.handleEnterDescriptionEditMode}
             isFocused={isFocused}
@@ -212,7 +216,8 @@ ${header.get('rawDescription')}`;
             onShareHeader={this.handleShareHeaderClick}
             onRefileHeader={this.handleRefileHeaderRequest}
             onAddNote={this.handleAddNoteClick}
-          />);
+          />
+      </div>);
   }
 }
 
@@ -244,4 +249,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(StandardHeaderActionDrawer);
+export default connect(mapStateToProps, mapDispatchToProps)(StaticHeaderActionDrawer);
