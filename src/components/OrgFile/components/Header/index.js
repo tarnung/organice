@@ -497,7 +497,10 @@ ${header.get('rawDescription')}`;
               <Collapse
                 isOpened={isSelected && !shouldDisableActions}
                 springConfig={{ stiffness: 300 }}
-                style={{ marginRight: rightSwipeActionContainerStyle.width }}
+                style={{
+                  marginRight: rightSwipeActionContainerStyle.width,
+                  marginLeft: -style.paddingLeft + 20,
+                }}
               >
                 <HeaderActionDrawer
                   onEnterTitleEditMode={this.handleEnterTitleEditMode}
