@@ -11,6 +11,7 @@ import _ from 'lodash';
 import classNames from 'classnames';
 
 import { changelogHash } from '../../lib/org_utils';
+import { resolveDesktopMobileSetting } from '../../lib/browser_utils';
 import PrivacyPolicy from '../PrivacyPolicy';
 import HeaderBar from '../HeaderBar';
 import Landing from '../Landing';
@@ -150,7 +151,7 @@ class Entry extends PureComponent {
 
     return (
       <div className={className}>
-        {this.props.useStaticHeaderActionDrawer ?
+        {resolveDesktopMobileSetting(this.props.useStaticHeaderActionDrawer) ?
           <Switch>
             <Route path="/file/:path+">
               <div className='header-bar-and-static-action-bar'>

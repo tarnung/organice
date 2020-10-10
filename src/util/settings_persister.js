@@ -132,7 +132,7 @@ export const persistableFields = [
   {
     category: 'base',
     name: 'useStaticHeaderActionDrawer',
-    type: 'boolean',
+    type: 'nullable',
     shouldStoreInConfig: true,
   },
   {

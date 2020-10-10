@@ -50,3 +50,16 @@ export const isRunningAsPWA = 'standalone' in window.navigator && window.navigat
 export function isInLandscapeMode() {
   return [90, -90].includes(window.orientation);
 }
+
+/** settingValue is supposed to be one of 'never', 'always', 'desktop', 'mobile' */
+export const resolveDesktopMobileSetting = (settingValue) => {
+  if(!settingValue || settingValue==='never'){
+    return false;
+  } else if(settingValue==='always'){
+    return true;
+  } else if(settingValue==='desktop' && !isMobileBrowser){
+    return true;
+  } else if(settingValue==='mobile' && isMobileBrowser){
+    return true;
+  } else { return false; }
+}

@@ -70,8 +70,8 @@ const Settings = ({
   const handleShouldStoreSettingsInSyncBackendChange = () =>
     base.setShouldStoreSettingsInSyncBackend(!shouldStoreSettingsInSyncBackend);
 
-  const handleUseStaticHeaderActionDrawer = () =>
-    base.setUseStaticHeaderActionDrawer(!useStaticHeaderActionDrawer)
+  const handleUseStaticHeaderActionDrawer = (value) =>
+    base.setUseStaticHeaderActionDrawer(value)
 
   const handleChangelogClick = () => base.pushModalPage('changelog');
 
@@ -224,10 +224,11 @@ const Settings = ({
           Use an always visible unmoving action bar at the top of the screen instead.
           </div>
         </div>
-        <Switch
-          isEnabled={useStaticHeaderActionDrawer}
-          onToggle={handleUseStaticHeaderActionDrawer}
-        />
+        <TabButtons
+            buttons={["never", "desktop", "mobile", "always"]}
+            selectedButton={useStaticHeaderActionDrawer}
+            onSelect={handleUseStaticHeaderActionDrawer}
+          />
       </div>
 
       <div className="settings-buttons-container">

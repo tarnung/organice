@@ -20,6 +20,7 @@ import HeaderActionDrawer from './components/HeaderActionDrawer';
 import { headerWithId } from '../../../../lib/org_utils';
 import { interpolateColors, rgbaObject, rgbaString } from '../../../../lib/color';
 import { getCurrentTimestamp } from '../../../../lib/timestamps';
+import { resolveDesktopMobileSetting } from '../../../../lib/browser_utils';
 
 class Header extends PureComponent {
   SWIPE_ACTION_ACTIVATION_DISTANCE = 80;
@@ -494,7 +495,7 @@ ${header.get('rawDescription')}`;
                 isSelected={isSelected}
                 shouldDisableActions={shouldDisableActions}
               />
-              {!useStaticHeaderActionDrawer ?
+              {!resolveDesktopMobileSetting(useStaticHeaderActionDrawer) ?
                 <Collapse
                   isOpened={isSelected && !shouldDisableActions}
                   springConfig={{ stiffness: 300 }}
