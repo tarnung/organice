@@ -93,7 +93,7 @@ const Settings = ({
       <div className="setting-container">
         <div className="setting-label">Color scheme</div>
         <TabButtons
-          buttons={['Light', 'Dark']}
+          buttons={['Light', 'Dark','smyck']}
           selectedButton={colorScheme}
           onSelect={handleColorSchemeClick}
         />

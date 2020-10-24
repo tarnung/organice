@@ -78,3 +78,34 @@ export const solarizedLight = () => {
   // table highlight
   root.style.setProperty('--green-soft', 'rgba(133, 153, 0, 0.28)');
 };
+
+export const smyck = () => {
+  /*
+   see http://color.smyck.org/ for palette
+ */
+  const root = document.documentElement;
+  // background and highlights
+  root.style.setProperty('--base3', '#000000');
+  root.style.setProperty('--base2', '#1F1F1F');
+  root.style.setProperty('--base1', '#3E3E3E');
+  root.style.setProperty('--base0', '#5D5D5D');
+  root.style.setProperty('--base00', '#B0B0B0');
+  root.style.setProperty('--base01', '#C8C8C8');
+  root.style.setProperty('--base02', '#DFDFDF');
+  root.style.setProperty('--base03', '#F7F7F7');
+  // transparent versions
+  root.style.setProperty('--base0-soft', 'rgba(176, 176, 176, 0.75)');
+  root.style.setProperty('--base1-soft', 'rgba(93, 93, 93, 0.4)');
+  // header colors
+  root.style.setProperty('--blue', '#72B3CC');
+  root.style.setProperty('--green', '#8EB33B');
+  root.style.setProperty('--cyan', '#218693');
+  root.style.setProperty('--yellow', '#D0B03C');
+  // additional colors
+  root.style.setProperty('--orange', '#C75646');
+  root.style.setProperty('--red', '#E09690');
+  root.style.setProperty('--magenta', '#77DFD8');
+  root.style.setProperty('--violet', '#FBB1F9');
+  // table highlight
+  root.style.setProperty('--green-soft', 'rgba(133, 153, 0, 0.28)');
+};
