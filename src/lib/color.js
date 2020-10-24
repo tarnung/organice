@@ -78,3 +78,33 @@ export const solarizedLight = () => {
   // table highlight
   root.style.setProperty('--green-soft', 'rgba(133, 153, 0, 0.28)');
 };
+
+export const oneDark = () => {
+  /*
+    adaptation of atom one dark theme
+    https://github.com/atom/atom/tree/master/packages/one-dark-ui
+  */
+  const root = document.documentElement;
+  // background and highlights
+  root.style.setProperty('--base03', 'rgb(171, 178, 191)');
+  root.style.setProperty('--base02', '#eee8d5'); //todo
+  root.style.setProperty('--base01', '#93a1a1'); //todo
+  root.style.setProperty('--base00', 'rgb(92, 99, 112)');
+  root.style.setProperty('--base0', 'rgb(76, 82, 99)');
+  root.style.setProperty('--base1', '#586e75'); //todo
+  root.style.setProperty('--base2', '#073642'); //todo
+  root.style.setProperty('--base3', 'rgb(40, 44, 52)');
+  // transparent versions
+  root.style.setProperty('--base0-soft', 'rgba(101, 123, 131, 0.75)'); //todo
+  root.style.setProperty('--base1-soft', 'rgba(88, 110, 117, 0.4)'); //todo
+  // header colors
+  root.style.setProperty('--blue', 'rgb(100, 148, 237)');
+  root.style.setProperty('--green', 'rgb(115, 201, 144)');
+  root.style.setProperty('--cyan', 'rgb(204, 133, 51)'); //orange
+  root.style.setProperty('--yellow', 'rgb(226, 192, 141)');
+  // additional colors
+  root.style.setProperty('--orange', 'rgb(255, 99, 71)');//red
+  root.style.setProperty('--red', '#D831B0'); //pink
+  root.style.setProperty('--magenta', 'rgb(0, 136, 255)');//blue
+  root.style.setProperty('--violet', '#d33682'); //todo
+};

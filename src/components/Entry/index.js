@@ -25,7 +25,7 @@ import SyncServiceSignIn from '../SyncServiceSignIn';
 import * as syncBackendActions from '../../actions/sync_backend';
 import * as orgActions from '../../actions/org';
 import * as baseActions from '../../actions/base';
-import { solarizedDark, solarizedLight } from '../../lib/color';
+import { solarizedDark, solarizedLight, oneDark } from '../../lib/color';
 
 class Entry extends PureComponent {
   constructor(props) {
@@ -145,7 +145,9 @@ class Entry extends PureComponent {
       solarizedDark();
     } else if (colorScheme === 'Light') {
       solarizedLight();
-    }
+    } else if(colorScheme === 'One Dark'){
+           oneDark()
+         }
 
     const pendingCapturePath = !!pendingCapture && `/file${pendingCapture.get('capturePath')}`;
     const shouldRedirectToCapturePath = pendingCapturePath && pendingCapturePath !== pathname;
