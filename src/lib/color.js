@@ -78,3 +78,36 @@ export const solarizedLight = () => {
   // table highlight
   root.style.setProperty('--green-soft', 'rgba(133, 153, 0, 0.28)');
 };
+
+export const gruvboxLight = () => {
+  /*
+   gruvbox light
+   see https://github.com/morhetz/gruvbox for palette
+   this theme uses the 'faded' version of the color palette
+ */
+  const root = document.documentElement;
+  // background and highlights
+  root.style.setProperty('--base3', '#fbf1c7'); // bg0
+  root.style.setProperty('--base2', '#d5c4a1'); // bg2
+  root.style.setProperty('--base1', '#bdae93'); // bg3
+  root.style.setProperty('--base0', '#a89984'); // bg4
+  root.style.setProperty('--base00', '#7c6f64'); // fg4
+  root.style.setProperty('--base01', '#665c54'); // fg3
+  root.style.setProperty('--base02', '#504945'); // fg2
+  root.style.setProperty('--base03', '#282828'); // fg0
+  // transparent versions
+  root.style.setProperty('--base0-soft', 'rgba(168, 153, 132, 0.75)');
+  root.style.setProperty('--base1-soft', 'rgba(189, 174, 147, 0.4)');
+  // header colors
+  root.style.setProperty('--blue', '#076678');
+  root.style.setProperty('--green', '#79740e');
+  root.style.setProperty('--cyan', '#427b58');
+  root.style.setProperty('--yellow', '#b57614');
+  // additional colors
+  root.style.setProperty('--orange', '#af3a03');
+  root.style.setProperty('--red', '#9d0006');
+  root.style.setProperty('--magenta', '#8f3f71'); // faded purple
+  root.style.setProperty('--violet', '#b16286'); // neutral purple
+  // table highlight
+  root.style.setProperty('--green-soft', 'rgba(133, 153, 0, 0.28)');
+};
