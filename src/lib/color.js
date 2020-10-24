@@ -78,3 +78,35 @@ export const solarizedLight = () => {
   // table highlight
   root.style.setProperty('--green-soft', 'rgba(133, 153, 0, 0.28)');
 };
+
+export const oneLight = () => {
+  /*
+    adaptation of atom one dark theme
+    https://github.com/atom/atom/tree/master/packages/one-dark-ui
+  */
+  const root = document.documentElement;
+  // background and highlights
+  root.style.setProperty('--base03', '#383A42');
+  root.style.setProperty('--base02', '#585A5F');
+  root.style.setProperty('--base01', '#79797C');
+  root.style.setProperty('--base00', '#999999');
+  root.style.setProperty('--base0', '#A0A1A7');
+  root.style.setProperty('--base1', '#C0C0C4');
+  root.style.setProperty('--base2', '#DFE0E2');
+  root.style.setProperty('--base3', '#FFFFFF');
+  // transparent versions
+  root.style.setProperty('--base0-soft', 'rgba(160, 161, 167, 0.75)');
+  root.style.setProperty('--base1-soft', 'rgba(192, 192, 196, 0.4)');
+  // header colors
+  root.style.setProperty('--blue', '#1492ff');
+  root.style.setProperty('--green', '#2db448');
+  root.style.setProperty('--cyan', '#D831B0'); // pink
+  root.style.setProperty('--yellow', '#d5880b');
+  // additional colors
+  root.style.setProperty('--orange', '#f42a2a'); //red
+  root.style.setProperty('--red', '#f42a2a');
+  root.style.setProperty('--magenta', 'hsl(208, 100%, 56%)'); // blue
+  root.style.setProperty('--violet', '#D831B0'); // pink
+  // table highlight
+  root.style.setProperty('--green-soft', 'rgba(133, 153, 0, 0.28)');
+};
