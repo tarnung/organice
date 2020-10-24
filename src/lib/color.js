@@ -78,3 +78,37 @@ export const solarizedLight = () => {
   // table highlight
   root.style.setProperty('--green-soft', 'rgba(133, 153, 0, 0.28)');
 };
+
+export const darkPlus = () => {
+  /*
+    a very rough approximation of Dark+ (default dark theme of VS Code)
+    https://github.com/microsoft/vscode/blob/master/extensions/theme-defaults/themes/dark_plus.json
+  */
+  const root = document.documentElement;
+  // backgrounds
+  root.style.setProperty('--base3', '#1E1E1E');
+  root.style.setProperty('--base2', '#2C2C32');
+  root.style.setProperty('--base1', '#303036');
+  root.style.setProperty('--base0', '#34343a');
+  // highlights
+  root.style.setProperty('--base00', '#C8C8C8');
+  root.style.setProperty('--base01', '#cccccc');
+  root.style.setProperty('--base02', '#D0D0D0');
+  root.style.setProperty('--base03', '#D4D4D4');
+  // shadows
+  root.style.setProperty('--base0-soft', 'rgba(52, 52, 58, 0.75)');
+  // highlighted backgrounds
+  root.style.setProperty('--base1-soft', 'rgba(48, 48, 54, 0.4)');
+  // header colors
+  root.style.setProperty('--blue', 'rgb(79,193,255)');
+  root.style.setProperty('--green', 'rgb(106, 153, 85)');
+  root.style.setProperty('--cyan', '#ce9178');// orange (cyan is #4EC9B0)
+  root.style.setProperty('--yellow', '#d7ba7d');
+  // additional colors
+  root.style.setProperty('--orange', '#d16969');// red
+  root.style.setProperty('--red', '#d16969');
+  root.style.setProperty('--magenta', '#569cd6');// light blue
+  root.style.setProperty('--violet', '#C586C0');
+  // table highlight
+  root.style.setProperty('--green-soft', 'rgba(133, 153, 0, 0.28)');
+};
