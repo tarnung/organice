@@ -259,7 +259,12 @@ const getFieldsToPersist = (state, fields) => {
                 field.name,
                 JSON.stringify(state[field.category].get(field.name) || field.default || {}),
               ]
-            : [field.name, state[field.category].get(field.name) || field.default];
+            : [
+                field.name,
+                state[field.category].get(field.name) == null
+                  ? field.default
+                  : state[field.category].get(field.name),
+              ];
         })
     );
 };
