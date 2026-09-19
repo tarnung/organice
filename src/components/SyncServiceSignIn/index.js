@@ -182,7 +182,7 @@ function Forgejo() {
       {isVisible && (
         <form onSubmit={handleSubmit}>
           <p>
-            <label htmlFor="input-forgejo-project">Project:</label>
+            <label htmlFor="input-forgejo-project">Repository:</label>
             <input
               id="input-forgejo-project"
               type="url"
