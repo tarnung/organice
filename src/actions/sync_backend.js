@@ -4,6 +4,7 @@ import { setLoadingMessage, hideLoadingMessage, clearModalStack, setIsLoading } 
 import { parseFile, setDirty, setLastSyncAt, setOrgFileErrorMessage } from './org';
 import { localStorageAvailable, persistField } from '../util/settings_persister';
 import { createGitlabOAuth } from '../sync_backend_clients/gitlab_sync_backend_client';
+import { createForgejoOAuth } from '../sync_backend_clients/forgejo_sync_backend_client';
 
 import { addSeconds } from 'date-fns';
 
@@ -29,6 +30,12 @@ export const signOut = () => (dispatch, getState) => {
     case 'GitLab':
       persistField('gitLabProject', null);
       createGitlabOAuth().reset();
+      break;
+    case 'Forgejo':
+      persistField('forgejoDomain', null);
+      persistField('forgejoOwner', null);
+      persistField('forgejoRepository', null);
+      createForgejoOAuth().reset();
       break;
     default:
   }

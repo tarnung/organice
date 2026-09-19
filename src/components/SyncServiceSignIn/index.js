@@ -6,12 +6,17 @@ import './stylesheet.css';
 
 import DropboxLogo from 'url:./dropbox.svg';
 import GitLabLogo from 'url:./gitlab.svg';
+import ForgejoLogo from 'url:./forgejo.svg';
 
 import { persistField } from '../../util/settings_persister';
 import {
   createGitlabOAuth,
   gitLabProjectIdFromURL,
 } from '../../sync_backend_clients/gitlab_sync_backend_client';
+import {
+  createForgejoOAuth,
+  forgejoRepositoryFromURL,
+} from '../../sync_backend_clients/forgejo_sync_backend_client';
 
 import { DropboxAuth } from 'dropbox';
 import _ from 'lodash';
@@ -149,6 +154,51 @@ function GitLab() {
   );
 }
 
+function Forgejo() {
+  const [isVisible, setIsVisible] = useState(false);
+  const toggleVisible = () => setIsVisible(!isVisible);
+
+  const defaultRepository = 'https://example.com/owner/repo';
+  const [repository, setRepository] = useState(defaultRepository);
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    const urlParts = forgejoRepositoryFromURL(repository);
+    if (urlParts) {
+      persistField('authenticatedSyncService', 'Forgejo');
+      persistField('forgejoDomain', urlParts.domain);
+      persistField('forgejoOwner', urlParts.owner);
+      persistField('forgejoRepository', urlParts.repository);
+      createForgejoOAuth().fetchAuthorizationCode();
+    } else {
+      alert('This does not appear to be a valid forgejo URL');
+    }
+  };
+
+  return (
+    <>
+      <a href="#forgejo" onClick={toggleVisible}>
+        <img src={ForgejoLogo} alt="Forgejo logo" />
+      </a>
+      {isVisible && (
+        <form onSubmit={handleSubmit}>
+          <p>
+            <label htmlFor="input-forgejo-project">Project:</label>
+            <input
+              id="input-forgejo-project"
+              type="url"
+              className="textfield"
+              placeholder={defaultRepository}
+              value={repository}
+              onChange={(e) => setRepository(e.target.value)}
+            />
+          </p>
+          <input type="submit" value="Sign-in" />
+        </form>
+      )}
+    </>
+  );
+}
+
 export default class SyncServiceSignIn extends PureComponent {
   constructor(props) {
     super(props);
@@ -190,6 +240,10 @@ export default class SyncServiceSignIn extends PureComponent {
 
         <div className="sync-service-container">
           <GitLab />
+        </div>
+
+        <div className="sync-service-container">
+          <Forgejo />
         </div>
 
         <div className="sync-service-container">
