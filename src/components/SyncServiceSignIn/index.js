@@ -241,7 +241,7 @@ export default class SyncServiceSignIn extends PureComponent {
     return (
       <div className="sync-service-sign-in-container">
         <p className="sync-service-sign-in__help-text">
-          organice syncs your files with Dropbox, GitLab, and WebDAV.
+          organice syncs your files with Dropbox, GitLab, Forgejo, and WebDAV.
         </p>
         <p className="sync-service-sign-in__help-text">Click to sign in with:</p>
 

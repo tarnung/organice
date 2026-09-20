@@ -39,6 +39,18 @@ export const contentsResponseToDirectoryListing = (contents) => {
   );
 };
 
+function unicodeToBase64(str) {
+  const bytes = new TextEncoder().encode(str);
+  const binString = String.fromCodePoint(...bytes);
+  return btoa(binString);
+}
+
+function base64ToUnicode(base64Str) {
+  const binString = atob(base64Str);
+  const bytes = Uint8Array.from(binString, (n) => n.codePointAt(0));
+  return new TextDecoder().decode(bytes);
+}
+
 /**
  * Forgejo sync backend, implemented using their REST API.
  *
@@ -93,7 +105,7 @@ export default () => {
   const getFileContentsAndMetadata = async (path) => {
     const file = await callContentsApi(path);
     return {
-      contents: atob(file.content),
+      contents: base64ToUnicode(file.content),
       lastModifiedAt: file.last_commit_when,
     };
   };
@@ -101,13 +113,13 @@ export default () => {
   const getFileContents = async (path) => (await getFileContentsAndMetadata(path)).contents;
 
   const createFile = async (path, content) => {
-    await callContentsApi(path, 'POST', { content: btoa(content) });
+    await callContentsApi(path, 'POST', { content: unicodeToBase64(content) });
   };
 
   const updateFile = async (path, content) => {
     const currentFile = await callContentsApi(path);
     await callContentsApi(path, 'PUT', {
-      content: btoa(content),
+      content: unicodeToBase64(content),
       sha: currentFile.sha,
     });
   };
