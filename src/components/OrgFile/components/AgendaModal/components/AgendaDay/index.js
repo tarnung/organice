@@ -51,9 +51,6 @@ export default class AgendaDay extends PureComponent {
       orgHabitFollowingDays,
     } = this.props;
 
-    console.log('AGENDA DAY');
-    console.log(agendaTimestampTypes);
-
     const dateStart = startOfDay(date);
     const dateEnd = endOfDay(date);
 
