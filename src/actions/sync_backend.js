@@ -119,7 +119,7 @@ export const pushBackup = (pathOrFileId, contents) => {
         break;
       case 'GitLab':
       case 'Forgejo':
-        // No-op for GitLab, because the beauty of version control makes backup files redundant.
+        // No-op for git based backends, because the beauty of version control makes backup files redundant.
         break;
       default:
     }
