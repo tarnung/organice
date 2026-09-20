@@ -417,6 +417,7 @@ export const loadSettingsFromConfigFile = (dispatch, getState) => {
   switch (syncBackendClient.type) {
     case 'Dropbox':
     case 'GitLab':
+    case 'Forgejo':
     case 'WebDAV':
       fileContentsPromise = syncBackendClient.getFileContents('/.organice-config.json');
       break;

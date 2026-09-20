@@ -118,6 +118,7 @@ export const pushBackup = (pathOrFileId, contents) => {
         client.createFile(`${pathOrFileId}.organice-bak`, contents);
         break;
       case 'GitLab':
+      case 'Forgejo':
         // No-op for GitLab, because the beauty of version control makes backup files redundant.
         break;
       default:
