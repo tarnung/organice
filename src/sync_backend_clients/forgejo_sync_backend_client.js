@@ -113,7 +113,10 @@ export default () => {
   const getFileContents = async (path) => (await getFileContentsAndMetadata(path)).contents;
 
   const createFile = async (path, content) => {
-    await callContentsApi(path, 'POST', { content: unicodeToBase64(content) });
+    await callContentsApi(path, 'POST', {
+      content: unicodeToBase64(content),
+      message: `[organice] Create ${path.replace(/^\//, '')}\n\nAutomatic commit from organice app.`,
+    });
   };
 
   const updateFile = async (path, content) => {
@@ -121,6 +124,7 @@ export default () => {
     await callContentsApi(path, 'PUT', {
       content: unicodeToBase64(content),
       sha: currentFile.sha,
+      message: `[organice] Update ${path.replace(/^\//, '')}\n\nAutomatic commit from organice app.`,
     });
   };
 
@@ -128,6 +132,7 @@ export default () => {
     const currentFile = await callContentsApi(path);
     await callContentsApi(path, 'DELETE', {
       sha: currentFile.sha,
+      message: `[organice] Delete ${path.replace(/^\//, '')}\n\nAutomatic commit from organice app.`,
     });
   };
 
