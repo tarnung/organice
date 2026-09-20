@@ -25,9 +25,7 @@ import createWebDAVSyncBackendClient from './sync_backend_clients/webdav_sync_ba
 import createGitLabSyncBackendClient, {
   createGitlabOAuth,
 } from './sync_backend_clients/gitlab_sync_backend_client';
-import createForgejoSyncBackendClient, {
-  createForgejoOAuth,
-} from './sync_backend_clients/forgejo_sync_backend_client';
+import createForgejoSyncBackendClient from './sync_backend_clients/forgejo_sync_backend_client';
 
 import './base.css';
 
@@ -70,24 +68,6 @@ const handleGitLabAuthResponse = async (oauthClient) => {
   }
 };
 
-const handleForgejoAuthResponse = async (oauthClient) => {
-  let success = false;
-  try {
-    success = await oauthClient.isReturningFromAuthServer();
-    await oauthClient.getAccessToken();
-  } catch {
-    success = false;
-  }
-  if (!success) {
-    // Edge case: somehow OAuth success redirect occurred but there isn't a code in
-    // the current location's search params. This /shouldn't/ happen in practice.
-    alert('Unexpected sign in error, please try again');
-    return;
-  }
-  createForgejoSyncBackendClient(oauthClient);
-  window.location.search = '';
-};
-
 export default class App extends PureComponent {
   constructor(props) {
     super(props);
@@ -121,15 +101,15 @@ export default class App extends PureComponent {
           }
           break;
         case 'Forgejo':
-          const forgejoOAuth = createForgejoOAuth();
-          if (forgejoOAuth.isAuthorized()) {
-            client = createForgejoSyncBackendClient(forgejoOAuth);
+          if (getPersistedField('forgejoAccessToken')) {
+            client = createForgejoSyncBackendClient();
             initialState.syncBackend = Map({
               isAuthenticated: true,
               client,
             });
           } else {
-            handleForgejoAuthResponse(forgejoOAuth);
+            // alert('Unexpected sign in error, please try again');
+            window.location.search = '';
           }
           break;
         case 'WebDAV':

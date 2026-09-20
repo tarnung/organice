@@ -13,10 +13,7 @@ import {
   createGitlabOAuth,
   gitLabProjectIdFromURL,
 } from '../../sync_backend_clients/gitlab_sync_backend_client';
-import {
-  createForgejoOAuth,
-  forgejoRepositoryFromURL,
-} from '../../sync_backend_clients/forgejo_sync_backend_client';
+import { forgejoRepositoryFromURL } from '../../sync_backend_clients/forgejo_sync_backend_client';
 
 import { DropboxAuth } from 'dropbox';
 import _ from 'lodash';
@@ -159,18 +156,23 @@ function Forgejo() {
   const toggleVisible = () => setIsVisible(!isVisible);
 
   const defaultRepository = 'https://example.com/owner/repo';
-  const [repository, setRepository] = useState(defaultRepository);
+  const defaultAccessToken = 'put your forgejo access token here';
+  const [repository, setRepository] = useState('');
+  const [accessToken, setAccessToken] = useState('');
   const handleSubmit = (evt) => {
     evt.preventDefault();
     const urlParts = forgejoRepositoryFromURL(repository);
-    if (urlParts) {
+    if (urlParts && accessToken) {
       persistField('authenticatedSyncService', 'Forgejo');
+      persistField('forgejoAccessToken', accessToken);
       persistField('forgejoDomain', urlParts.domain);
       persistField('forgejoOwner', urlParts.owner);
       persistField('forgejoRepository', urlParts.repository);
-      createForgejoOAuth().fetchAuthorizationCode();
-    } else {
+      window.location = window.location.origin + '/';
+    } else if (!url) {
       alert('This does not appear to be a valid forgejo URL');
+    } else {
+      alert('You must provide an access token');
     }
   };
 
@@ -182,14 +184,25 @@ function Forgejo() {
       {isVisible && (
         <form onSubmit={handleSubmit}>
           <p>
-            <label htmlFor="input-forgejo-project">Repository:</label>
+            <label htmlFor="input-forgejo-repository">Repository:</label>
             <input
-              id="input-forgejo-project"
+              id="input-forgejo-repository"
               type="url"
               className="textfield"
               placeholder={defaultRepository}
               value={repository}
               onChange={(e) => setRepository(e.target.value)}
+            />
+          </p>
+          <p>
+            <label htmlFor="input-forgejo-access-token">Access Token:</label>
+            <input
+              id="input-forgejo-access-token"
+              type="text"
+              className="textfield"
+              placeholder={defaultAccessToken}
+              value={accessToken}
+              onChange={(e) => setAccessToken(e.target.value)}
             />
           </p>
           <input type="submit" value="Sign-in" />

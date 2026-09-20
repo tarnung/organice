@@ -1,45 +1,7 @@
-/* global process */
-
-import { OAuth2AuthCodePKCE } from '@bity/oauth2-auth-code-pkce';
 import { orgFileExtensions } from '../lib/org_utils';
 import { getPersistedField } from '../util/settings_persister';
 
 import { fromJS, Map } from 'immutable';
-
-export const createForgejoOAuth = () => {
-  // Use promises as mutex to prevent concurrent token refresh attempts, which causes problems.
-  // More info: https://github.com/BitySA/oauth2-auth-code-pkce/issues/29
-  // TODO: remove this workaround if/when oauth2-auth-code-pkce fixes the issue.
-  let expiryPromise;
-  let invalidGrantPromise;
-  return new OAuth2AuthCodePKCE({
-    authorizationUrl: `${getPersistedField('forgejoDomain')}/login/oauth/authorize`,
-    tokenUrl: `${getPersistedField('forgejoDomain')}/login/oauth/access_token`,
-    clientId: process.env.REACT_APP_FORGEJO_CLIENT_ID,
-    redirectUrl: window.location.origin,
-    scopes: ['api'],
-    extraAuthorizationParams: {
-      clientSecret: process.env.REACT_APP_FORGEJO_SECRET,
-    },
-    onAccessTokenExpiry: async (refreshToken) => {
-      if (!expiryPromise) {
-        expiryPromise = refreshToken();
-      }
-      const result = await expiryPromise;
-      expiryPromise = undefined;
-      return result;
-    },
-    onInvalidGrant: async (refreshAuthCodeOrToken) => {
-      if (!invalidGrantPromise) {
-        invalidGrantPromise = refreshAuthCodeOrToken();
-      }
-      // This is a void promise, so don't need to return the result. Refer to the TypeScript source
-      // of OAuth2AuthCodePKCE. Types are great.
-      await invalidGrantPromise;
-      invalidGrantPromise = undefined;
-    },
-  });
-};
 
 export const forgejoRepositoryFromURL = (url) => {
   const regex = /(?<domain>.+)\/(?<owner>[^\/]+)\/(?<repository>[^\/]+)$/;
@@ -81,39 +43,30 @@ export const contentsResponseToDirectoryListing = (contents) => {
  * Forgejo sync backend, implemented using their REST API.
  *
  * @see https://forgejo.org/docs/latest/user/api/usage/
- * @param {OAuth2AuthCodePKCE} oauthClient
  */
-export default (oauthClient) => {
-  const decoratedFetch = oauthClient.decorateFetchHTTPClient(fetch);
-
+export default () => {
   const getRepositoryApi = () =>
     `${getPersistedField('forgejoDomain')}/api/v1/repos/${getPersistedField(
       'forgejoOwner'
     )}/${getPersistedField('forgejoRepository')}`;
 
   const isSignedIn = async () => {
-    if (!oauthClient.isAuthorized()) {
-      return false;
-    }
-    // Verify that we have an OAuth token (and refresh if needed).
-    // Don't care about return value, because the library handles
-    // persisting for us.
-    try {
-      await oauthClient.getAccessToken();
-      return true;
-    } catch (e) {
-      console.error('Error trying to get OAuth access token.');
-      console.error(e);
-      return false;
-    }
+    const response = await fetch(getRepositoryApi(), {
+      method: 'GET',
+      headers: {
+        Authorization: 'token ' + getPersistedField('forgejoAccessToken'),
+      },
+    });
+    return response.ok;
   };
 
   const callContentsApi = async (path, method = 'GET', body = null) => {
     const url = `${getRepositoryApi()}/contents${path}`;
-    const response = await decoratedFetch(url, {
+    const response = await fetch(url, {
       method,
       headers: {
         'Content-Type': 'application/json',
+        Authorization: 'token ' + getPersistedField('forgejoAccessToken'),
       },
       body: body == null ? null : JSON.stringify(body),
     });
@@ -145,7 +98,7 @@ export default (oauthClient) => {
     };
   };
 
-  const getFileContents = async (path) => atob((await getFileContentsAndMetadata(path)).contents);
+  const getFileContents = async (path) => (await getFileContentsAndMetadata(path)).contents;
 
   const createFile = async (path, content) => {
     await callContentsApi(path, 'POST', { content: btoa(content) });
