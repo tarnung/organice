@@ -4,7 +4,7 @@ import { getPersistedField } from '../util/settings_persister';
 import { fromJS, Map } from 'immutable';
 
 export const forgejoRepositoryFromURL = (url) => {
-  const regex = /(?<domain>.+)\/(?<owner>[^\/]+)\/(?<repository>[^\/]+)$/;
+  const regex = /(?<domain>.+)\/(?<owner>[^/]+)\/(?<repository>[^/]+)$/;
   const match = url.match(regex);
   if (match) {
     return match.groups;
@@ -98,7 +98,7 @@ export default () => {
     };
   };
 
-  const getMoreDirectoryListing = async (additionalSyncBackendState) => {
+  const getMoreDirectoryListing = async (_) => {
     throw Error('not implemented');
   };
 

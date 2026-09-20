@@ -169,7 +169,7 @@ function Forgejo() {
       persistField('forgejoOwner', urlParts.owner);
       persistField('forgejoRepository', urlParts.repository);
       window.location = window.location.origin + '/';
-    } else if (!url) {
+    } else if (!urlParts) {
       alert('This does not appear to be a valid forgejo URL');
     } else {
       alert('You must provide an access token');
