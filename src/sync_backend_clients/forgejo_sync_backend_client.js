@@ -145,7 +145,7 @@ export default (oauthClient) => {
     };
   };
 
-  const getFileContents = async (path) => atob((await getFileContentsAndMetadata(path)).contents);
+  const getFileContents = async (path) => (await getFileContentsAndMetadata(path)).contents;
 
   const createFile = async (path, content) => {
     await callContentsApi(path, 'POST', { content: btoa(content) });
