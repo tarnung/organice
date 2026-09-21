@@ -17,7 +17,7 @@ export const contentsResponseToDirectoryListing = (contents) => {
     contents
       .filter((it) => isDirectory(it) || it.name.match(orgFileExtensions))
       .map((it) => ({
-        id: it.sha,
+        id: `${it.path}-${it.sha}`,
         name: it.name,
         // Organice requires a leading "/", whereas Forgejo API doesn't
         // use one.
